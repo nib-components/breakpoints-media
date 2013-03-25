@@ -1,0 +1,106 @@
+<html>
+	<head>
+		<link 
+			rel="stylesheet" 
+			type="text/css" 
+			href="../../../../sass/public/screen.css">
+		<style>
+			.r-grid-container > .r-grid {
+				margin-top: 20px;
+			}
+
+			.r-grid__unit p {
+				color: #fff;
+				padding: 20px;
+				background: #f43059;
+			}
+
+			.r-grid__unit img {
+				max-width: 100%;
+			}
+
+			.r-grid__unit .outer {
+				padding: 3px 20px;
+				background: #333;
+			}
+
+			@media only screen and (min-width: 1025px){
+				.unit-480,
+				.unit-800 {
+					display: none;
+				}
+				.unit-desktop {
+					display: block;
+				}
+			}
+
+			@media only screen and (max-width: 1024px){
+				.unit-desktop,
+				.unit-480 {
+					display: none;
+				}
+				.unit-800 {
+					display: block;
+				}
+			}
+
+			@media (max-width: 480px){
+				.unit-desktop,
+				.unit-800 {
+					display: none;
+				}
+				.unit-480 {
+					display: block;
+				}
+			}
+		</style>
+		<script type="text/javascript" src="../../../vendor/modernizr.js"></script>
+	</head>
+	<body class="block-4">
+		<div class="r-grid-container">
+
+			<div class="copy pad-normal">
+				This demo utilises
+				<ul>
+					<li>The grid classes for layout. The grid will also define a 'breakpoint' value to the html:before element</li>
+					<li>The breakpoints JS module to read the 'content' value of the html:before element on window resize</li>
+					<li>The body-attributes JS module to get the current breakpoint value and add it to a body data-attribute</li>
+				</ul>
+			</div>
+ 
+		   	<div class="r-grid">
+				<div class="r-grid__unit unit-5of12 unit-800-2of4 unit-480-full">
+		            <p class="unit-desktop">unit-5of12</p>
+		            <p class="unit-800">unit-800-2of4</p>
+		            <p class="unit-480">unit-480-full</p>
+		        </div>
+		        <div class="r-grid__unit unit-7of12 unit-800-2of4 unit-480-full">
+		            <img 
+						src="nicolas-cage.jpg"
+						data-image-breakpoints="480,640,800,960"
+						alt="Nicolas Cage"
+					/>
+		        </div>
+		    </div>
+
+		    <div class="r-grid">
+				<div class="r-grid__unit unit-5of12 unit-800-2of4 unit-480-full">
+		            <p class="unit-desktop">unit-5of12</p>
+		            <p class="unit-800">unit-800-2of4</p>
+		            <p class="unit-480">unit-480-full</p>
+		        </div>
+		        <div class="r-grid__unit unit-7of12 unit-800-2of4 unit-480-full">
+		            <img 
+						src="nicolas-cage.jpg" 
+						data-image-breakpoints="640,800,960"
+						alt="Nicolas Cage"
+					/>
+		        </div>
+		    </div>
+		</div>
+		<script type="text/javascript" src="../../../dist/app.js"></script>
+		<script>
+			require('breakpoint-media').create();
+		</script>
+	</body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "breakpoint-media",
+  "version": "0.1.0",
+  "scripts": ["index.js"],
+  "dependencies": {
+  	"nib-components/breakpoints": "0.1.0"
+  }
+}

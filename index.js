@@ -1,62 +1,59 @@
-var breakpoints = require('breakpoints');
+var throttle = require('throttle');
+var event = require('event');
 
-var toArray = function(obj) {
-	return Array.prototype.slice.apply(obj);
-};
-
-function BreakpointMedia (element, options) {
-	this.el = element || document.body;
-	this.images = this.extractImages(this.el);
+function normalize(images) {
+	return Array.prototype.map.call(images, function(el) {
+		return {
+			el: el,
+			media: el.getAttribute('data-media'),
+			src: el.getAttribute('data-src'),
+			fallback: el.hasAttribute('data-fallback')
+		};
+	});
 }
 
-BreakpointMedia.prototype.extractImages = function(el){
-	var images = [];
-	var elements = el.querySelectorAll('[data-image-breakpoints]');
+function BreakpointMedia(images, options) {
+	options = options || {};
+	this.fallback = options.fallback || false;
+	this._resize = throttle(this.update.bind(this), 300);
+	this.images = normalize(images);
+	event.bind(window, 'resize', this._resize);
+}
 
-	toArray(elements).forEach(function(el){
-		images.push({
-			el: el,
-			attrs: el.getAttribute('data-image-breakpoints').split(','),
-			src: el.getAttribute('src')
-		});
-	}, this);
-
-	return images;
-};
-
-BreakpointMedia.prototype.updateItem = function(item){
-	if (this.hasBreakpoint(item)){
-		this._updateSource(item);
-	} else {
-		this._resetSource(item);
-	}
-};
-
-BreakpointMedia.prototype._updateSource = function(item) {
-	var src = item.src.replace(/(.{3,4})$/, '-'+this.breakpoint+'$1');
-	item.el.setAttribute('src', src);
-};
-
-BreakpointMedia.prototype._resetSource = function(item) {
+BreakpointMedia.prototype.show = function(item) {
 	item.el.setAttribute('src', item.src);
+	item.el.removeAttribute('hidden');
 };
 
-BreakpointMedia.prototype.hasBreakpoint = function(item) {
-	return item.attrs.indexOf(this.breakpoint) > -1;
+BreakpointMedia.prototype.hide = function(item) {
+	item.el.removeAttribute('src');
+	item.el.setAttribute('hidden');
 };
 
-BreakpointMedia.prototype.setBreakpoint = function(breakpoint){
-	this.breakpoint = breakpoint;
-	this.images.forEach(this.updateItem, this);
+BreakpointMedia.prototype.update = function(){
+	this.images.forEach(function(item) {
+		if( this.fallback && item.fallback ) {
+			this.show(item);
+		}
+		else if (window.matchMedia(item.media).matches) {
+			this.show(item);
+		}
+		else {
+			this.hide(item);
+		}
+	}, this);
 };
 
-BreakpointMedia.create = function(){	
-	var media = new BreakpointMedia();
-	breakpoints.events.on('change', function(current){
-		media.setBreakpoint(current);
+BreakpointMedia.prototype.remove = function() {
+	event.unbind(window, 'resize', this._resize);
+};
+
+BreakpointMedia.create = function() {
+	var images = document.querySelectorAll('.js-breakpoint-media');
+	var media = new BreakpointMedia(images, {
+		fallback: !!window.matchMedia
 	});
-	media.setBreakpoint(breakpoints.getCurrent());
-	return media;
+	media.update();
 };
 
 module.exports = BreakpointMedia;

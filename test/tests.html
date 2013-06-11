@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mocha</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <link rel="stylesheet" href="mocha.css" />
+  </head>
+  <body>
+    <div class="fixture">
+      <div data-src="320.jpg" data-media="(max-width: 479px)" height="271" hidden></div>
+      <div data-src="640.jpg" data-media="(min-width: 480px) and (max-width: 799px)" height="400" hidden data-fallback></div>
+      <div data-src="960.jpg" data-media="(min-width: 800px) and (max-width: 959px)" height="400" hidden></div>
+      <div data-src="wide.jpg" data-media="(min-width: 960px)" height="545" src="wide.jpg"></div>
+    </div>
+    <div id="mocha"></div>
+    <script src="mocha.js"></script>
+    <script src="../build/build.js"></script>
+    <script>mocha.setup('bdd')</script>
+    <script src="tests.js"></script>
+    <script>
+      mocha.run();
+    </script>
+  </body>
+</html>

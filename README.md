@@ -11,3 +11,7 @@ The images:
     <div data-src="640.jpg" data-media="(min-width: 480px)" hidden data-fallback></div>
 
 Add data-fallback on the default image for browsers without media queries
+
+Destroy it
+
+    media.remove();

@@ -22,12 +22,12 @@ function BreakpointMedia(images, options) {
 
 BreakpointMedia.prototype.show = function(item) {
 	item.el.setAttribute('src', item.src);
-	item.el.removeAttribute('hidden');
+	item.el.classList.remove('is-hidden');
 };
 
 BreakpointMedia.prototype.hide = function(item) {
 	item.el.removeAttribute('src');
-	item.el.setAttribute('hidden');
+	item.el.classList.add('is-hidden');
 };
 
 BreakpointMedia.prototype.update = function(){

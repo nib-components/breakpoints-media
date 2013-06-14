@@ -30,12 +30,16 @@ BreakpointMedia.prototype.hide = function(item) {
 	item.el.classList.add('is-hidden');
 };
 
+BreakpointMedia.prototype.hasMatchMedia = function() {
+	return "matchMedia" in window;
+};
+
 BreakpointMedia.prototype.update = function(){
 	this.images.forEach(function(item) {
-		if( this.fallback && item.fallback ) {
+		if ( this.hasMatchMedia() && window.matchMedia(item.media).matches) {
 			this.show(item);
 		}
-		else if (window.matchMedia(item.media).matches) {
+		else if( this.hasMatchMedia() === false && item.fallback ) {
 			this.show(item);
 		}
 		else {
@@ -50,9 +54,7 @@ BreakpointMedia.prototype.remove = function() {
 
 BreakpointMedia.create = function() {
 	var images = document.querySelectorAll('.js-breakpoint-media');
-	var media = new BreakpointMedia(images, {
-		fallback: !window.matchMedia
-	});
+	var media = new BreakpointMedia(images);
 	media.update();
 };
 

@@ -9,6 +9,6 @@
     "component/event": "*"
   },
   "development": {
-    "component/assert": "*"
+    "chaijs/chai": "*"
   }
 }

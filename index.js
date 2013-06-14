@@ -51,7 +51,7 @@ BreakpointMedia.prototype.remove = function() {
 BreakpointMedia.create = function() {
 	var images = document.querySelectorAll('.js-breakpoint-media');
 	var media = new BreakpointMedia(images, {
-		fallback: !!window.matchMedia
+		fallback: !window.matchMedia
 	});
 	media.update();
 };

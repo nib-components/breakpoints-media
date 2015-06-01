@@ -1,0 +1,17 @@
+{
+  "name": "@nib-components/breakpoint-media",
+  "version": "0.2.3",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:nib-components/breakpoints-media.git"
+  },
+  "dependencies": {
+    "throttleit": "*",
+    "component-event": "*"
+  },
+  "browser": {
+    "throttle": "throttleit",
+    "event": "component-event"
+  }
+}
